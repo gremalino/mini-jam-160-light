@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Update() {
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer | LayerMask.GetMask("Destructible", "SpikePlatform", "MovingPlatform"));
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer | LayerMask.GetMask("Destructible", "SpikePlatform", "MovingPlatform", "Crusher"));
         if (isGrounded) {
             remainingJumps = maxJumps;
         }
