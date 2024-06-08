@@ -10,10 +10,12 @@ public class Crusher : MonoBehaviour {
 
     private Vector3 startingPosition;
     private Transform playerTransform;
+    private bool isFrozen = false;
+    private Coroutine moveCoroutine;
 
     void Start() {
         startingPosition = transform.position;
-        StartCoroutine(MoveCrusher());
+        moveCoroutine = StartCoroutine(MoveCrusher());
     }
 
     IEnumerator MoveCrusher() {
@@ -21,8 +23,10 @@ public class Crusher : MonoBehaviour {
 
         while (true) {
             yield return new WaitForSeconds(pauseDuration);
+            if (isFrozen) yield return new WaitUntil(() => !isFrozen);
             yield return MoveToPosition(startingPosition + Vector3.up * moveDistance, moveDuration);
             yield return new WaitForSeconds(pauseDuration);
+            if (isFrozen) yield return new WaitUntil(() => !isFrozen);
             yield return MoveToPosition(startingPosition, moveDuration);
         }
     }
@@ -32,6 +36,11 @@ public class Crusher : MonoBehaviour {
         float elapsedTime = 0f;
 
         while (elapsedTime < duration) {
+            if (isFrozen) {
+                yield return new WaitUntil(() => !isFrozen);
+                initialPosition = transform.position;
+                elapsedTime = 0f; 
+            }
             transform.position = Vector3.Lerp(initialPosition, targetPosition, elapsedTime / duration);
             elapsedTime += Time.deltaTime;
             yield return null;
@@ -52,5 +61,19 @@ public class Crusher : MonoBehaviour {
             playerTransform.SetParent(null);
             playerTransform = null;
         }
+    }
+
+    public void Freeze(float time) {
+        if (moveCoroutine != null) {
+            StopCoroutine(moveCoroutine);
+        }
+        StartCoroutine(FreezeRoutine(time));
+    }
+
+    private IEnumerator FreezeRoutine(float time) {
+        isFrozen = true;
+        yield return new WaitForSeconds(time);
+        isFrozen = false;
+        moveCoroutine = StartCoroutine(MoveCrusher());
     }
 }

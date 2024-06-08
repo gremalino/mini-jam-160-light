@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour {
 
     private EnemyController[] enemies;
     private MovingPlatform[] platforms;
+    private Crusher[] crushers;
 
     public GameObject bombPrefab;
     public Transform bombSpawnPoint;
@@ -71,6 +72,7 @@ public class PlayerController : MonoBehaviour {
 
         enemies = FindObjectsByType<EnemyController>(FindObjectsSortMode.None);
         platforms = FindObjectsByType<MovingPlatform>(FindObjectsSortMode.None);
+        crushers = FindObjectsByType<Crusher>(FindObjectsSortMode.None);
     }
 
     void OnEnable() {
@@ -191,6 +193,10 @@ public class PlayerController : MonoBehaviour {
 
         foreach (var platform in platforms) {
             platform.Freeze(time);
+        }
+
+        foreach (var crusher in crushers) {
+            crusher.Freeze(time);
         }
 
         StartCooldown(AbilityType.Freeze);
