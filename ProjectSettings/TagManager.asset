@@ -7,6 +7,7 @@ TagManager:
   - Spike
   - Enemy
   - EnemyWaypoint
+  - Destructible
   layers:
   - Default
   - TransparentFX
@@ -15,8 +16,8 @@ TagManager:
   - Water
   - UI
   - Ground
-  - 
-  - 
+  - Destructible
+  - SpikePlatform
   - 
   - 
   - 
@@ -61,6 +62,9 @@ TagManager:
     locked: 0
   - name: Moving Platform
     uniqueID: 229290443
+    locked: 0
+  - name: Bomb
+    uniqueID: 927940799
     locked: 0
   m_RenderingLayers:
   - Default

@@ -1,15 +1,21 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour {
+
     public Transform[] waypoints;
     public float speed = 2f;
 
     private int currentWaypointIndex = 0;
     private bool movingForward = true;
     private Transform playerTransform;
+    private bool isFrozen = false;
 
     void Update() {
-        MoveTowardsWaypoint();
+        if (!isFrozen) {
+            MoveTowardsWaypoint();
+        }
     }
 
     void MoveTowardsWaypoint() {
@@ -55,5 +61,15 @@ public class MovingPlatform : MonoBehaviour {
             playerTransform.SetParent(null);
             playerTransform = null;
         }
+    }
+
+    public void Freeze(float time) {
+        StartCoroutine(FreezeRoutine(time));
+    }
+
+    private IEnumerator FreezeRoutine(float time) {
+        isFrozen = true;
+        yield return new WaitForSeconds(time);
+        isFrozen = false;
     }
 }

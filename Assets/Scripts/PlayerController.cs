@@ -48,6 +48,12 @@ public class PlayerController : MonoBehaviour {
     private bool isInvincible;
     private bool isCollidingWithDanger;
 
+    private EnemyController[] enemies;
+    private MovingPlatform[] platforms;
+
+    public GameObject bombPrefab;
+    public Transform bombSpawnPoint;
+
     void Awake() {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -57,6 +63,9 @@ public class PlayerController : MonoBehaviour {
         controls.Player.Move.canceled += ctx => moveInput = Vector2.zero;
         controls.Player.Jump.performed += ctx => OnJump();
         controls.Player.Interact.performed += ctx => OnAbilityPressed();
+
+        enemies = FindObjectsByType<EnemyController>(FindObjectsSortMode.None);
+        platforms = FindObjectsByType<MovingPlatform>(FindObjectsSortMode.None);
     }
 
     void OnEnable() {
@@ -68,7 +77,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Update() {
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer);
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer | LayerMask.GetMask("Destructible", "SpikePlatform", "MovingPlatform"));
         if (isGrounded) {
             remainingJumps = maxJumps;
         }
@@ -165,56 +174,32 @@ public class PlayerController : MonoBehaviour {
             DoInvincibility(power);
     }
 
-    private void DoHorizontalBoost(float power) {
-        Debug.Log("Boost!");
-
-        float dashDirection = moveInput.x == 0 ? lastHorizontalDirection : Mathf.Sign(moveInput.x);
-
-        rb.velocity = new Vector2(dashDirection * power, rb.velocity.y);
-
-        StartCooldown(AbilityType.Boost);
-
-        isHorizontalBoosting = true;
-        StartCoroutine(EndHorizontalBoostAfterTime(0.5f));
-    }
-
-    private void DoVerticalBoost(float power) {
-        Debug.Log("Rocket!");
-
-        rb.velocity = new Vector2(rb.velocity.x, power);
-
-        StartCooldown(AbilityType.Rocket);
-
-        isVerticalBoosting = true;
-        StartCoroutine(EndVerticalBoostAfterTime(0.5f));
-    }
-
     private void DoFreeze(float time) {
         Debug.Log($"Freeze for {time} seconds!");
+
+        foreach (var enemy in enemies) {
+            enemy.Freeze(time);
+        }
+
+        foreach (var platform in platforms) {
+            platform.Freeze(time);
+        }
+
         StartCooldown(AbilityType.Freeze);
     }
 
     private void DoBomb(float power) {
         Debug.Log("Bomb!");
+
+        GameObject bombInstance = Instantiate(bombPrefab, bombSpawnPoint.position, bombSpawnPoint.rotation);
+
+        Rigidbody2D bombRb = bombInstance.GetComponent<Rigidbody2D>();
+
+        Vector2 playerVelocity = rb.velocity;
+        Vector2 throwForce = new Vector2(power * transform.localScale.x, power);
+        bombRb.velocity = playerVelocity + throwForce;
+
         StartCooldown(AbilityType.Bomb);
-    }
-
-    private void DoInvincibility(float time) {
-        Debug.Log($"Invincible for {time} seconds!");
-
-        isInvincible = true;
-
-        StartCoroutine(InvincibilityDuration(time));
-
-        StartCooldown(AbilityType.Invincible);
-    }
-
-    private IEnumerator InvincibilityDuration(float time) {
-        yield return new WaitForSeconds(time);
-        isInvincible = false;
-        if (isCollidingWithDanger) {
-            Die();
-        }
     }
 
     private void StartCooldown(AbilityType ability) {
@@ -235,23 +220,33 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    private void DoHorizontalBoost(float power) {
+        Debug.Log("Boost!");
+
+        float dashDirection = moveInput.x == 0 ? lastHorizontalDirection : Mathf.Sign(moveInput.x);
+
+        rb.velocity = new Vector2(dashDirection * power, rb.velocity.y);
+
+        StartCooldown(AbilityType.Boost);
+
+        isHorizontalBoosting = true;
+        StartCoroutine(EndHorizontalBoostAfterTime(0.5f));
+    }
+
     private IEnumerator EndHorizontalBoostAfterTime(float duration) {
         yield return new WaitForSeconds(duration - 0.1f);
-
-        float elapsedTime = 0f;
-        float decelerationDuration = 0.1f;
-        float targetSpeed = 15f;
-        float initialSpeed = Mathf.Abs(rb.velocity.x);
-
-        while (elapsedTime < decelerationDuration) {
-            elapsedTime += Time.deltaTime;
-            float newSpeed = Mathf.Lerp(initialSpeed, targetSpeed, elapsedTime / decelerationDuration);
-            float dashDirection = rb.velocity.x > 0 ? 1 : -1;
-            rb.velocity = new Vector2(dashDirection * newSpeed, rb.velocity.y);
-            yield return null;
-        }
-
         isHorizontalBoosting = false;
+    }
+
+    private void DoVerticalBoost(float power) {
+        Debug.Log("Rocket!");
+
+        rb.velocity = new Vector2(rb.velocity.x, power);
+
+        StartCooldown(AbilityType.Rocket);
+
+        isVerticalBoosting = true;
+        StartCoroutine(EndVerticalBoostAfterTime(0.5f));
     }
 
     private IEnumerator EndVerticalBoostAfterTime(float duration) {
@@ -263,5 +258,23 @@ public class PlayerController : MonoBehaviour {
     {
         _respawnPoint = position;
         transform.position = position;
+    }
+
+    private void DoInvincibility(float time) {
+        Debug.Log($"Invincible for {time} seconds!");
+
+        isInvincible = true;
+
+        StartCoroutine(InvincibilityDuration(time));
+
+        StartCooldown(AbilityType.Invincible);
+    }
+
+    private IEnumerator InvincibilityDuration(float time) {
+        yield return new WaitForSeconds(time);
+        isInvincible = false;
+        if (isCollidingWithDanger) {
+            Die();
+        }
     }
 }
