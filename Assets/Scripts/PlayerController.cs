@@ -51,6 +51,9 @@ public class PlayerController : MonoBehaviour {
     private EnemyController[] enemies;
     private MovingPlatform[] platforms;
 
+    public GameObject bombPrefab;
+    public Transform bombSpawnPoint;
+
     void Awake() {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -74,7 +77,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Update() {
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer);
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer | LayerMask.GetMask("Destructible", "SpikePlatform", "MovingPlatform"));
         if (isGrounded) {
             remainingJumps = maxJumps;
         }
@@ -187,6 +190,15 @@ public class PlayerController : MonoBehaviour {
 
     private void DoBomb(float power) {
         Debug.Log("Bomb!");
+
+        GameObject bombInstance = Instantiate(bombPrefab, bombSpawnPoint.position, bombSpawnPoint.rotation);
+
+        Rigidbody2D bombRb = bombInstance.GetComponent<Rigidbody2D>();
+
+        Vector2 playerVelocity = rb.velocity;
+        Vector2 throwForce = new Vector2(power * transform.localScale.x, power);
+        bombRb.velocity = playerVelocity + throwForce;
+
         StartCooldown(AbilityType.Bomb);
     }
 
