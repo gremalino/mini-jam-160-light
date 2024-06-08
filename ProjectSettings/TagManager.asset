@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - EnemyWaypoint
   - Destructible
+  - Crusher
+  - CrusherKillCheck
   layers:
   - Default
   - TransparentFX
@@ -18,7 +20,7 @@ TagManager:
   - Ground
   - Destructible
   - SpikePlatform
-  - 
+  - Crusher
   - 
   - 
   - 
@@ -47,6 +49,9 @@ TagManager:
     locked: 0
   - name: Background
     uniqueID: 2910495901
+    locked: 0
+  - name: Crusher
+    uniqueID: 2630522285
     locked: 0
   - name: Floor
     uniqueID: 3261870485
