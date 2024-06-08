@@ -78,6 +78,12 @@ public class PlayerController : MonoBehaviour {
         transform.position = respawnPoint.position;
         rb.velocity = Vector2.zero;
     }
+
+    public void DebugUseAbility(int ability)
+    {
+        _equippedAbility = (AbilityType) ability;
+        OnAbilityPressed();
+    }
     
     private void OnAbilityPressed()
     {
