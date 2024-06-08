@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Spike
+  - Enemy
+  - EnemyWaypoint
   layers:
   - Default
   - TransparentFX
@@ -47,11 +50,17 @@ TagManager:
   - name: Floor
     uniqueID: 3261870485
     locked: 0
+  - name: Enemy
+    uniqueID: 2859167271
+    locked: 0
   - name: Player
     uniqueID: 3224179815
     locked: 0
-  - name: Enemy
-    uniqueID: 2859167271
+  - name: Hazard
+    uniqueID: 2768984133
+    locked: 0
+  - name: Moving Platform
+    uniqueID: 229290443
     locked: 0
   m_RenderingLayers:
   - Default

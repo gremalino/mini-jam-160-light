@@ -4,12 +4,14 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour {
+
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
     public Transform groundCheck;
     public LayerMask groundLayer;
     public int maxJumps = 2;
     public Transform respawnPoint;
+    public bool canDoubleJump = true;
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -50,7 +52,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     void OnJump() {
-        if (isGrounded || remainingJumps > 0) {
+        if (isGrounded || (canDoubleJump && remainingJumps > 0)) {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             remainingJumps--;
         }
@@ -64,5 +66,17 @@ public class PlayerController : MonoBehaviour {
     void Respawn() {
         transform.position = respawnPoint.position;
         rb.velocity = Vector2.zero;
+    }
+
+    void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.gameObject.CompareTag("Spike")) {
+            Die();
+        } else if (collision.gameObject.CompareTag("Enemy")) {
+            if (transform.position.y > collision.transform.position.y + 0.5f) {
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            } else {
+                Die();
+            }
+        }
     }
 }
