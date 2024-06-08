@@ -3670,11 +3670,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 800807524}
+  - component: {fileID: 800807526}
   - component: {fileID: 800807523}
   - component: {fileID: 800807522}
   - component: {fileID: 800807521}
   - component: {fileID: 800807525}
-  - component: {fileID: 800807526}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3838,6 +3838,10 @@ MonoBehaviour:
   _equippedAbility: 0
   _abilityData: {fileID: 11400000, guid: db98e12522ec040bfb9b9c8b2b524d9f, type: 2}
   isGrounded: 0
+  currentXVelocity: 0
+  currentYVelocity: 0
+  speedThreshold: 15
+  decelerationStrength: 8
 --- !u!1 &807982964
 GameObject:
   m_ObjectHideFlags: 0
@@ -4922,7 +4926,7 @@ Transform:
   m_GameObject: {fileID: 989281293}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.87264824, y: 0.28, z: -6}
+  m_LocalPosition: {x: 0.87333274, y: 0.28, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5155,7 +5159,7 @@ Transform:
   m_GameObject: {fileID: 1065710683}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.87264824, y: 0.28, z: -6}
+  m_LocalPosition: {x: 0.87333274, y: 0.28, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6048,9 +6052,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1326803980}
   m_Layer: 0
-  m_Name: RepsawnPoint
+  m_Name: RespawnPoint
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1

@@ -16,20 +16,25 @@ MonoBehaviour:
   - DisplayName: Boost
     AbilityType: 1
     Icon: {fileID: 0}
-    Power: 10
+    Power: 35
+    Cooldown: 1
   - DisplayName: Rocket
     AbilityType: 2
     Icon: {fileID: 0}
-    Power: 10
+    Power: 30
+    Cooldown: 1
   - DisplayName: Freeze
     AbilityType: 3
     Icon: {fileID: 0}
     Power: 5
+    Cooldown: 1
   - DisplayName: Bomb
     AbilityType: 4
     Icon: {fileID: 0}
     Power: 5
+    Cooldown: 1
   - DisplayName: Invincible
     AbilityType: 5
     Icon: {fileID: 0}
     Power: 5
+    Cooldown: 1
