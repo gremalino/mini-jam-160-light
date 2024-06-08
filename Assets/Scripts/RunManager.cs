@@ -61,6 +61,14 @@ public class RunManager : MonoBehaviour
         _runState.CurrentWorld ++;
         _gameUI.OnWorldChange(_runState.CurrentWorld, _playerState);
         _levelManager.OnNewLevelReached(_runState.CurrentWorld);
+        
+        if (_runState.CurrentWorld == _worldCount)
+            OnGameComplete();
+    }
+
+    public void OnGameComplete()
+    {
+        _gameUI.OnGameComplete(_runState, _playerState);
     }
     
     public void SavePlayerProgress()
