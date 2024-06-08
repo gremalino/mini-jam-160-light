@@ -82,7 +82,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Update() {
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer | LayerMask.GetMask("Destructible", "SpikePlatform", "MovingPlatform", "Crusher"));
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.1f, LayerMask.GetMask("Destructible", "SpikePlatform", "MovingPlatform", "Crusher", "Ground"));
         if (isGrounded) {
             remainingJumps = maxJumps;
         }
@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour {
             }
         }
 
-        CrushCheck(); // Add this line
+        CrushCheck();
     }
 
     void OnJump() {
@@ -139,7 +139,7 @@ public class PlayerController : MonoBehaviour {
     void Respawn() {
         transform.position = _respawnPoint;
         rb.velocity = Vector2.zero;
-        isCrushed = false; // Add this line
+        isCrushed = false;
     }
 
     void OnCollisionEnter2D(Collision2D collision) {

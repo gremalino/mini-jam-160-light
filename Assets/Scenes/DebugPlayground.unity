@@ -1123,6 +1123,9 @@ MonoBehaviour:
   _timeDiffText: {fileID: 940895285}
   _timeText: {fileID: 2030129755}
   _activeHighlight: {fileID: 1082811863}
+  _colorGood: {r: 0, g: 0, b: 0, a: 0}
+  _colorMid: {r: 0, g: 0, b: 0, a: 0}
+  _colorBad: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &199111622
 GameObject:
   m_ObjectHideFlags: 0
@@ -1667,6 +1670,9 @@ MonoBehaviour:
   _timeDiffText: {fileID: 135897347}
   _timeText: {fileID: 1485320353}
   _activeHighlight: {fileID: 691871025}
+  _colorGood: {r: 0, g: 0, b: 0, a: 0}
+  _colorMid: {r: 0, g: 0, b: 0, a: 0}
+  _colorBad: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &331134383
 GameObject:
   m_ObjectHideFlags: 0
@@ -2196,10 +2202,12 @@ MonoBehaviour:
     BestTimes: []
     RunTime: 0
   _playerState:
-    BestTimes: 
+    BestSectionTimes: 
+    BestRunTimes: 
     BestOverallTime: 0
     UnlockedAchievements: []
   _gameUI: {fileID: 1108462004}
+  _levelManager: {fileID: 0}
 --- !u!4 &435672834
 Transform:
   m_ObjectHideFlags: 0
@@ -5158,6 +5166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timeUI: {fileID: 636031038}
+  _endUI: {fileID: 0}
 --- !u!114 &1108462005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7749,6 +7758,9 @@ MonoBehaviour:
   _timeDiffText: {fileID: 1321159465}
   _timeText: {fileID: 1441073392}
   _activeHighlight: {fileID: 1851430183}
+  _colorGood: {r: 0, g: 0, b: 0, a: 0}
+  _colorMid: {r: 0, g: 0, b: 0, a: 0}
+  _colorBad: {r: 0, g: 0, b: 0, a: 0}
 --- !u!224 &2116669219
 RectTransform:
   m_ObjectHideFlags: 0

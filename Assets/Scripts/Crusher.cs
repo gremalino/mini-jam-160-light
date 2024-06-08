@@ -9,7 +9,6 @@ public class Crusher : MonoBehaviour {
     public float initialDelay = 1f;
 
     private Vector3 startingPosition;
-    private bool movingUp = true;
 
     void Start() {
         startingPosition = transform.position;
