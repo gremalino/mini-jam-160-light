@@ -54,6 +54,11 @@ public class PlayerController : MonoBehaviour {
     public GameObject bombPrefab;
     public Transform bombSpawnPoint;
 
+    public Collider2D CrushCheckTop;
+    public Collider2D CrushCheckBottom;
+
+    private bool isCrushed = false; 
+
     void Awake() {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -110,6 +115,8 @@ public class PlayerController : MonoBehaviour {
                 abilityTimers.Remove(ability);
             }
         }
+
+        CrushCheck(); // Add this line
     }
 
     void OnJump() {
@@ -132,6 +139,7 @@ public class PlayerController : MonoBehaviour {
     void Respawn() {
         transform.position = respawnPoint.position;
         rb.velocity = Vector2.zero;
+        isCrushed = false; // Add this line
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
@@ -269,6 +277,15 @@ public class PlayerController : MonoBehaviour {
         isInvincible = false;
         if (isCollidingWithDanger) {
             Die();
+        }
+    }
+
+    private void CrushCheck() {
+        if (CrushCheckTop.IsTouchingLayers(LayerMask.GetMask("Crusher")) && CrushCheckBottom.IsTouchingLayers(LayerMask.GetMask("Crusher"))) {
+            if (!isCrushed) {
+                Die();
+                isCrushed = true;
+            }
         }
     }
 }
