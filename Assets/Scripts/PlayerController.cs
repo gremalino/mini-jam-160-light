@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour {
     public Collider2D CrushCheckTop;
     public Collider2D CrushCheckBottom;
 
-    private bool isCrushed = false; 
+    private bool isCrushed = false;
 
     void Awake() {
         rb = GetComponent<Rigidbody2D>();
@@ -262,8 +262,7 @@ public class PlayerController : MonoBehaviour {
         isVerticalBoosting = false;
     }
 
-    public void SetSpawnPosition(Vector3 position)
-    {
+    public void SetSpawnPosition(Vector3 position) {
         _respawnPoint = position;
         transform.position = position;
     }
