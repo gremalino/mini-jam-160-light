@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3839311598825902477}
   - component: {fileID: 4859474954885743416}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1564664671193696567}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ GameObject:
   m_Component:
   - component: {fileID: 161056364913879647}
   - component: {fileID: 7446556975551629581}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PlayerGraphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 3698844939105679035}
   - component: {fileID: 7876751387141923216}
   - component: {fileID: 7693713059115884860}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -269,6 +269,7 @@ MonoBehaviour:
     m_Bits: 64
   maxJumps: 1
   canDoubleJump: 1
+  health: 1
   _equippedAbility: 0
   _abilityData: {fileID: 11400000, guid: db98e12522ec040bfb9b9c8b2b524d9f, type: 2}
   isGrounded: 0
@@ -278,6 +279,7 @@ MonoBehaviour:
   decelerationStrength: 8
   bombPrefab: {fileID: 6668987927851335791, guid: 4e5de56206668dc40b385c84c4525290, type: 3}
   bombSpawnPoint: {fileID: 5285510587253440786}
+  explosionForce: 80
   CrushCheckTop: {fileID: 2247452863598504067}
   CrushCheckBottom: {fileID: 492398901339448867}
 --- !u!210 &2913390537741170545
@@ -441,7 +443,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5579714068286160059}
   - component: {fileID: 8495572686182159495}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -528,7 +530,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7297804246787326989}
   - component: {fileID: 2247452863598504067}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CrushCheckTopCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -605,7 +607,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 158607329890889323}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CrushCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -639,7 +641,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7134721203576333987}
   - component: {fileID: 492398901339448867}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CrushCheckBottomCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -716,7 +718,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5285510587253440786}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BombSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -748,7 +750,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3817537567875237762}
   - component: {fileID: 6197999565496539614}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}

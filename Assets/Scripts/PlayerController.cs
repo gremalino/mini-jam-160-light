@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour {
     public LayerMask groundLayer;
     public int maxJumps = 2;
     public bool canDoubleJump = true;
+    public int health = 1;
 
     [SerializeField] private AbilityType _equippedAbility;
     [SerializeField] private AbilityData _abilityData;
@@ -54,6 +55,7 @@ public class PlayerController : MonoBehaviour {
 
     public GameObject bombPrefab;
     public Transform bombSpawnPoint;
+    public float explosionForce = 10f;
 
     public Collider2D CrushCheckTop;
     public Collider2D CrushCheckBottom;
@@ -128,6 +130,20 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    public void TakeDamage(int damage, Vector2 explosionPosition) {
+        if (!isInvincible) {
+            health -= damage;
+
+            if (health <= 0) {
+                Die();
+            }
+        } else {
+            Vector2 explosionDirection = (transform.position - (Vector3)explosionPosition).normalized;
+            rb.AddForce(explosionDirection * explosionForce, ForceMode2D.Impulse);
+            Debug.Log("Bomb-jump shinanegans");
+        }
+    }
+
     void Die() {
         if (isInvincible) {
             Debug.Log("Player can't die, go wild!");
@@ -142,6 +158,7 @@ public class PlayerController : MonoBehaviour {
         transform.position = _respawnPoint;
         rb.velocity = Vector2.zero;
         isCrushed = false;
+        isInvincible = false;
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
