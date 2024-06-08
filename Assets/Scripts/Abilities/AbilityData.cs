@@ -1,0 +1,30 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "AbilityData", menuName = "Scriptable Objects/AbilityData")]
+public class AbilityData : ScriptableObject
+{
+    [Serializable]
+    public class AbilityDataItem
+    {
+        public string DisplayName;
+        public AbilityType AbilityType;
+        public Sprite Icon;
+        public float Power;
+    }
+
+    [SerializeField] private List<AbilityDataItem> _abilities;
+
+    public float GetPower(AbilityType atype)
+    {
+        foreach (var ability in _abilities)
+        {
+            if (ability.AbilityType == atype)
+                return ability.Power;
+        }
+
+        return 0;
+    }
+}
+

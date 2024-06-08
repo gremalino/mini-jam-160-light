@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour {
     public Transform respawnPoint;
 
     [SerializeField] private AbilityType _equippedAbility;
+    [SerializeField] private AbilityData _abilityData;
     
     private Rigidbody2D rb;
     private Animator animator;
@@ -87,40 +88,42 @@ public class PlayerController : MonoBehaviour {
     
     private void OnAbilityPressed()
     {
+        float power = _abilityData.GetPower(_equippedAbility);
+        
         if (_equippedAbility == AbilityType.Boost)
-            DoHorizontalBoost();
+            DoHorizontalBoost(power);
         else if (_equippedAbility == AbilityType.Rocket)
-            DoVerticalBoost();
+            DoVerticalBoost(power);
         else if (_equippedAbility == AbilityType.Freeze)
-            DoFreeze();
+            DoFreeze(power);
         else if (_equippedAbility == AbilityType.Bomb)
-            DoBomb();
+            DoBomb(power);
         else if (_equippedAbility == AbilityType.Invincible)
-            DoInvicibility();
+            DoInvicibility(power);
     }
 
-    private void DoHorizontalBoost()
+    private void DoHorizontalBoost(float power)
     {
         Debug.Log("Boost!");
     }
     
-    private void DoVerticalBoost()
+    private void DoVerticalBoost(float power)
     {
         Debug.Log("Rocket!");
     }
     
-    private void DoFreeze()
+    private void DoFreeze(float time)
     {
-        Debug.Log("Freeze!");
+        Debug.Log($"Freeze for {time} seconds!");
     }
     
-    private void DoBomb()
+    private void DoBomb(float power)
     {
         Debug.Log("Bomb!");
     }
     
-    private void DoInvicibility()
+    private void DoInvicibility(float time)
     {
-        Debug.Log("Invincible!");
+        Debug.Log($"Invincible for {time} seconds!");
     }
 }

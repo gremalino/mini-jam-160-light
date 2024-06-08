@@ -2854,6 +2854,7 @@ MonoBehaviour:
   maxJumps: 2
   respawnPoint: {fileID: 1326803980}
   _equippedAbility: 0
+  _abilityData: {fileID: 11400000, guid: db98e12522ec040bfb9b9c8b2b524d9f, type: 2}
   isGrounded: 0
 --- !u!1 &836370073
 GameObject:
