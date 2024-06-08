@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class EnemyController : MonoBehaviour {
 
@@ -6,13 +7,18 @@ public class EnemyController : MonoBehaviour {
     public Transform[] patrolPoints;
     public float speed = 2f;
     private int currentPointIndex = 0;
+    private bool isFrozen = false;
+    private float originalGravityScale;
 
     void Awake() {
         rb = GetComponent<Rigidbody2D>();
+        originalGravityScale = rb.gravityScale;
     }
 
     void Update() {
-        Patrol();
+        if (!isFrozen) {
+            Patrol();
+        }
     }
 
     void Patrol() {
@@ -38,5 +44,18 @@ public class EnemyController : MonoBehaviour {
     void Die() {
         Debug.Log("Enemy unalived :O");
         Destroy(gameObject);
+    }
+
+    public void Freeze(float time) {
+        StartCoroutine(FreezeRoutine(time));
+    }
+
+    private IEnumerator FreezeRoutine(float time) {
+        isFrozen = true;
+        rb.gravityScale = 0;
+        rb.velocity = Vector2.zero;
+        yield return new WaitForSeconds(time);
+        rb.gravityScale = originalGravityScale;
+        isFrozen = false;
     }
 }
