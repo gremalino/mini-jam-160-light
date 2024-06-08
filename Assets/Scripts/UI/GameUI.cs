@@ -9,8 +9,8 @@ public class GameUI : MonoBehaviour
         _timeUI.UpdateTimes(runState);
     }
 
-    public void OnWorldChange(int newWorld)
+    public void OnWorldChange(int newWorld, PlayerState playerState)
     {
-        _timeUI.OnWorldChange(newWorld);
+        _timeUI.OnWorldChange(newWorld, playerState);
     }
 }

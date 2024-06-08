@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [System.Serializable]
 public class PlayerState
 {
-    public List<int> BestTimes;
+    public List<int> BestSectionTimes;
+    public List<int> BestRunTimes;
     public int BestOverallTime;
     public List<string> UnlockedAchievements;
 
@@ -14,6 +16,7 @@ public class PlayerState
     {
         string jsonString = JsonUtility.ToJson(this);
         PlayerPrefs.SetString(PREFS_KEY, jsonString);
+        Debug.Log(jsonString);
         PlayerPrefs.Save();
     }
 
@@ -28,6 +31,11 @@ public class PlayerState
 
     public void Wipe()
     {
+        BestSectionTimes = new List<int>();
+        BestRunTimes = new List<int>();
+        BestOverallTime = 0;
+        UnlockedAchievements = new List<string>();
+        
         if (PlayerPrefs.HasKey(PREFS_KEY) == false)
             return;
         

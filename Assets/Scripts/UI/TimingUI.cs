@@ -12,24 +12,55 @@ public class TimingUI : MonoBehaviour
     public void UpdateTimes(RunState runState)
     {
         SetMainTimeString(runState.RunTime);
+
+        for (int i = 0; i < _listItems.Count; i++)
+        {
+            if (i != runState.CurrentWorld)
+                continue;
+
+            float bestTime = runState.BestTimes[i];
+            _listItems[i].SetPlusMinusTime(runState.RunTime - bestTime);
+        }
     }
 
-    public void OnWorldChange(int newWorld)
+    public void OnWorldChange(int newWorld, PlayerState playerState)
     {
         for (int i = 0; i < _listItems.Count; i++)
         {
             _listItems[i].SetHighlightActive(i == newWorld);
+
+            if (i == newWorld - 1)
+                _listItems[i].LockInTime();
+            
+            float bestTime = 0f;
+
+            if (i < playerState.BestRunTimes.Count)
+            {
+                bestTime = playerState.BestRunTimes[i] / 10f;
+            }
+
+            _listItems[i].SetBestTime(GetTimeString(bestTime));
         }
+
+        int sumOfBest = 0;
+
+        foreach (int val in playerState.BestRunTimes)
+        {
+            sumOfBest += val;
+        }
+
+        _sumOfBestText.text = GetTimeString(sumOfBest / 10f);
+        _personalBestText.text = GetTimeString(playerState.BestOverallTime / 10f);
     }
 
     private string GetTimeString(float totalSeconds)
     {
         int minutes = (int) totalSeconds / 60;
         int seconds = (int) totalSeconds - (minutes * 60);
-        int ms = (int)((totalSeconds - seconds) * 10);
+        int ms = (int)((totalSeconds - (int) totalSeconds) * 10);
 
         string secondsString = seconds.ToString("D2");
-        return $"{minutes}:{seconds}.{ms}";
+        return $"{minutes}:{secondsString}.{ms}";
     }
 
     // Yes this is stupid but it allows us to use a non-monospace font without it jittering

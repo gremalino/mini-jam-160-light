@@ -6,7 +6,7 @@ public class RunManager : MonoBehaviour
 {
     [SerializeField] private int _worldCount = 3;
     [SerializeField] private RunState _runState;
-    [SerializeField] private PlayerState _playerState;
+    [SerializeField] private PlayerState _playerState = new();
     [SerializeField] private GameUI _gameUI;
 
     private bool _isActive = true;
@@ -23,13 +23,13 @@ public class RunManager : MonoBehaviour
 
         for (int i = 0; i < _worldCount; i++)
         {
-            if (_playerState.BestTimes.Count > i)
+            if (_playerState.BestRunTimes.Count > i)
             {
-                _runState.BestTimes[i] = _playerState.BestTimes[i] / 10f;
+                _runState.BestTimes[i] = _playerState.BestRunTimes[i] / 10f;
             }
         }
         
-        _gameUI.OnWorldChange(0);
+        _gameUI.OnWorldChange(0, _playerState);
     }
 
     // Update is called once per frame
@@ -58,11 +58,12 @@ public class RunManager : MonoBehaviour
     public void OnLevelComplete()
     {
         _runState.CurrentWorld ++;
-        _gameUI.OnWorldChange(_runState.CurrentWorld);
+        _gameUI.OnWorldChange(_runState.CurrentWorld, _playerState);
     }
     
     public void SavePlayerProgress()
     {
+        Debug.Log(_playerState.BestOverallTime);
         _playerState.SaveToPrefs();
     }
     
