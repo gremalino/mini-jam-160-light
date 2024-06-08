@@ -3,6 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum AbilityType
+{
+    None,
+    Boost,
+    Rocket,
+    Freeze,
+    Bomb,
+    Invincible
+}
+
 public class PlayerController : MonoBehaviour {
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
@@ -11,6 +21,8 @@ public class PlayerController : MonoBehaviour {
     public int maxJumps = 2;
     public Transform respawnPoint;
 
+    [SerializeField] private AbilityType _equippedAbility;
+    
     private Rigidbody2D rb;
     private Animator animator;
     private Vector2 moveInput;
@@ -26,6 +38,7 @@ public class PlayerController : MonoBehaviour {
         controls.Player.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         controls.Player.Move.canceled += ctx => moveInput = Vector2.zero;
         controls.Player.Jump.performed += ctx => OnJump();
+        controls.Player.Interact.performed += ctx => OnAbilityPressed();
     }
 
     void OnEnable() {
@@ -64,5 +77,44 @@ public class PlayerController : MonoBehaviour {
     void Respawn() {
         transform.position = respawnPoint.position;
         rb.velocity = Vector2.zero;
+    }
+    
+    private void OnAbilityPressed()
+    {
+        if (_equippedAbility == AbilityType.Boost)
+            DoHorizontalBoost();
+        else if (_equippedAbility == AbilityType.Rocket)
+            DoVerticalBoost();
+        else if (_equippedAbility == AbilityType.Freeze)
+            DoFreeze();
+        else if (_equippedAbility == AbilityType.Bomb)
+            DoBomb();
+        else if (_equippedAbility == AbilityType.Invincible)
+            DoInvicibility();
+    }
+
+    private void DoHorizontalBoost()
+    {
+        Debug.Log("Boost!");
+    }
+    
+    private void DoVerticalBoost()
+    {
+        Debug.Log("Rocket!");
+    }
+    
+    private void DoFreeze()
+    {
+        Debug.Log("Freeze!");
+    }
+    
+    private void DoBomb()
+    {
+        Debug.Log("Bomb!");
+    }
+    
+    private void DoInvicibility()
+    {
+        Debug.Log("Invincible!");
     }
 }
