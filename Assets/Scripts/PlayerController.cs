@@ -19,7 +19,6 @@ public class PlayerController : MonoBehaviour {
     public Transform groundCheck;
     public LayerMask groundLayer;
     public int maxJumps = 2;
-    public Transform respawnPoint;
     public bool canDoubleJump = true;
 
     [SerializeField] private AbilityType _equippedAbility;
@@ -31,6 +30,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private bool isGrounded;
     private int remainingJumps;
     private InputSystem_Actions controls;
+    private Vector3 _respawnPoint;
 
     private Dictionary<AbilityType, float> abilityTimers = new Dictionary<AbilityType, float>();
 
@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Respawn() {
-        transform.position = respawnPoint.position;
+        transform.position = _respawnPoint;
         rb.velocity = Vector2.zero;
     }
 
@@ -257,5 +257,11 @@ public class PlayerController : MonoBehaviour {
     private IEnumerator EndVerticalBoostAfterTime(float duration) {
         yield return new WaitForSeconds(duration);
         isVerticalBoosting = false;
+    }
+
+    public void SetSpawnPosition(Vector3 position)
+    {
+        _respawnPoint = position;
+        transform.position = position;
     }
 }

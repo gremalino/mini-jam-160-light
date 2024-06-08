@@ -8,7 +8,8 @@ public class RunManager : MonoBehaviour
     [SerializeField] private RunState _runState;
     [SerializeField] private PlayerState _playerState = new();
     [SerializeField] private GameUI _gameUI;
-
+    [SerializeField] private LevelManager _levelManager;
+    
     private bool _isActive = true;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -59,6 +60,7 @@ public class RunManager : MonoBehaviour
     {
         _runState.CurrentWorld ++;
         _gameUI.OnWorldChange(_runState.CurrentWorld, _playerState);
+        _levelManager.OnNewLevelReached(_runState.CurrentWorld);
     }
     
     public void SavePlayerProgress()
