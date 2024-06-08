@@ -9,6 +9,7 @@ public class Crusher : MonoBehaviour {
     public float initialDelay = 1f;
 
     private Vector3 startingPosition;
+    private Transform playerTransform;
 
     void Start() {
         startingPosition = transform.position;
@@ -16,7 +17,6 @@ public class Crusher : MonoBehaviour {
     }
 
     IEnumerator MoveCrusher() {
-
         yield return new WaitForSeconds(initialDelay);
 
         while (true) {
@@ -38,5 +38,19 @@ public class Crusher : MonoBehaviour {
         }
 
         transform.position = targetPosition;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.CompareTag("Player")) {
+            playerTransform = other.transform;
+            playerTransform.SetParent(transform);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other) {
+        if (other.CompareTag("Player")) {
+            playerTransform.SetParent(null);
+            playerTransform = null;
+        }
     }
 }
